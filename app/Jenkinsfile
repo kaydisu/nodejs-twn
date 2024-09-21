@@ -17,7 +17,7 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
-                    dir("app/script.groovy") {
+                    dir("app") {
                        gv.increment()
                     }
                 }
@@ -27,7 +27,7 @@ pipeline {
         stage("Run tests") {
             steps {
                 script {
-                    dir("app/script.groovy") {
+                    dir("app") {
                        gv.runTest()
                     }
                 }
