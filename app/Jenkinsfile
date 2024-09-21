@@ -36,8 +36,10 @@ pipeline {
 
         stage("Build and Push docker image") {
             steps {
-                gv.buildImage(message: "Building and pushing the Docker image")
-            }
+               script {
+                gv.buildPushImage()
+             }
+           }
         }
 
         stage("commit version update") {
