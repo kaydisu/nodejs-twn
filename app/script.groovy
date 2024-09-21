@@ -5,11 +5,9 @@ def increment() {
         env.IMAGE_NAME = "$version-$BUILD_NUMBER"
     }
 def runTest() {
-    dir("app") {
         sh "npm install"
         sh "npm run test"
     }
-}
 def buildPushImage() {
     withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]){
         sh "docker build -t ebony9ja/nodes-twn-repo:${IMAGE_NAME} ./app"

@@ -17,10 +17,12 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
+           dir("app") {
                        gv.increment()
                     }
                 }
             }
+        }
 
         stage("Run tests") {
             steps {
