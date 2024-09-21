@@ -7,7 +7,7 @@ pipeline {
     }
     stages {
         stage("init") {
-                steps {
+              steps {
                     script {
                         gv = load "app/script.groovy"
                     }
@@ -17,7 +17,6 @@ pipeline {
         stage("increment version") {
             steps {
                 script {
-                    dir("app") {
                        gv.increment()
                     }
                 }
@@ -50,4 +49,10 @@ pipeline {
                 }
             }
         }
-    }
+
+   post {
+           always {
+               echo 'Pipeline execution complete'
+           }
+       }
+   }
