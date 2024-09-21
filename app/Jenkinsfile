@@ -14,7 +14,7 @@ pipeline {
                 }
             }
 
-        stage('increment version') {
+        stage("increment version") {
             steps {
                 script {
                     dir("app") {
@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Run tests') {
+        stage("Run tests") {
             steps {
                 script {
                     dir("app") {
@@ -34,13 +34,13 @@ pipeline {
             }
         }
 
-        stage('Build and Push docker image') {
+        stage("Build and Push docker image") {
             steps {
                 gv.buildPushImage()
             }
         }
 
-        stage('commit version update') {
+        stage("commit version update") {
             steps {
                 script {
                     gv.VersionUpdateCommit()
