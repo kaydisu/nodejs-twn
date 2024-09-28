@@ -1,3 +1,5 @@
+#!/user/bin/env groovy
+@Library('shared-library-nodejs')
 def gv
 
 pipeline {
@@ -18,7 +20,7 @@ pipeline {
             steps {
                 script {
            dir("app") {
-                       gv.increment()
+                       increment()
                     }
                 }
             }
@@ -28,7 +30,7 @@ pipeline {
             steps {
                 script {
                     dir("app") {
-                       gv.runTest()
+                       runTest()
                     }
                 }
             }
@@ -37,7 +39,7 @@ pipeline {
         stage("Build and Push docker image") {
             steps {
                script {
-                gv.buildPushImage()
+                buildPushImage()
              }
            }
         }
