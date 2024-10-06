@@ -32,12 +32,13 @@ pipeline {
             }
         }
 
-        stage('Build and Push docker image') {
+        stage('Build and Push docker image to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]){
-                    sh "docker build -t ebony9ja/nodes-twn-repo:${IMAGE_NAME} ./app"
+                    sh "docker build -t app-nodejs:${IMAGE_NAME} ./app"
+                    sh "docker tag app-nodejs:${IMAGE_NAME} ${env.USER}/aws-docker:${IMAGE_NAME}"
                     sh 'echo $PASS | docker login -u $USER --password-stdin'
-                    sh "docker push ebony9ja/nodes-twn-repo:${IMAGE_NAME}"
+                    sh "docker push ${env.USER}/aws-docker:${IMAGE_NAME}"
                 }
             }
         }
@@ -51,7 +52,7 @@ pipeline {
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
-                        sh 'git remote set-url origin https://kaydisu:${PASS}@github.com/kaydisu/nodejs-twn.git'
+                        sh 'git remote set-url origin https://${USER}:${PASS}@github.com/kaydisu/nodejs-twn.git'
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
                         sh 'git push origin HEAD:master'
